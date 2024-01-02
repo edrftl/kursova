@@ -1,8 +1,13 @@
 {
   "ExpandedNodes": [
     "",
-    "\\KURSACHciCHARPnigga"
+    "\\KURSACHciCHARPnigga",
+    "\\KURSACHciCHARPnigga\\bin",
+    "\\KURSACHciCHARPnigga\\obj"
   ],
+<<<<<<< Updated upstream
   "SelectedNode": "\\KURSACHciCHARPnigga\\MainWindow.xaml.cs",
+=======
+>>>>>>> Stashed changes
   "PreviewInSolutionExplorer": false
 }

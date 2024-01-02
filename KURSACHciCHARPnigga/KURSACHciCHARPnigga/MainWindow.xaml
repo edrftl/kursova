@@ -35,7 +35,7 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Grid Loaded="Window_Loaded">
+    <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
