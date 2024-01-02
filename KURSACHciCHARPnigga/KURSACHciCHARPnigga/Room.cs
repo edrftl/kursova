@@ -8,16 +8,27 @@ namespace KURSACHciCHARPnigga
 {
     public class Room
     {
-        public int Id { get; set; }
-        public string NameOfRoom { get; set; }
+        public string NameOfRoom;
+        public Room firstRoom;
+        public Room secondRoom;
+        public Room thirdRoom;
 
-        public int? FirstRoomId { get; set; }
-        public int? SecondRoomId { get; set; }
-        public int? ThirdRoomId { get; set; }
-
-        public Room FirstRoom { get; set; }
-        public Room SecondRoom { get; set; }
-        public Room ThirdRoom { get; set; }
-
+        public Room(string nameOfRoom, Room firstRoom, Room secondRoom, Room thirdRoom)
+        {
+            NameOfRoom = nameOfRoom;
+            this.firstRoom = firstRoom;
+            this.secondRoom = secondRoom;
+            this.thirdRoom = thirdRoom;
+        }
+        public Room(string nameOfRoom)
+        {
+            NameOfRoom = nameOfRoom;
+        }
+        public void InitializeRoom(Room firstRoom, Room secondRoom, Room thirdRoom)
+        {
+            this.firstRoom = firstRoom;
+            this.secondRoom = secondRoom;
+            this.thirdRoom = thirdRoom;
+        }
     }
 }

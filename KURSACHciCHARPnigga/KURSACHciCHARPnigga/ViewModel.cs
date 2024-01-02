@@ -10,8 +10,6 @@ namespace KURSACHciCHARPnigga
 {
     public class ViewModel : INotifyPropertyChanged
     {
-        MyDB dbContext;
-
         private Room _ourPos;
 
         public Room OurPos
@@ -34,12 +32,14 @@ namespace KURSACHciCHARPnigga
         public ICommand firstCommand => firstButtonCommand;
         public ICommand secondCommand => secondButtonCommand;
         public ICommand thirdCommand => thirdButtonCommand;
-        internal ViewModel(MyDB dbContext)
+        public ViewModel()
         {
-            this.dbContext = dbContext;
-            firstButtonCommand = new RelayCommand((o) => { MoveTo(1); }, (o) => firstButtonCommand != null);
-            secondButtonCommand = new RelayCommand((o) => { MoveTo(2); }, (o) => secondButtonCommand != null);
-            thirdButtonCommand = new RelayCommand((o) => { MoveTo(3); }, (o) => thirdButtonCommand != null);
+            firstButtonCommand = new RelayCommand((o) => { MoveTo(1); },
+                    (o) => firstCommand != null);
+            secondButtonCommand = new RelayCommand((o) => { MoveTo(2); },
+                    (o) => secondCommand != null);
+            thirdButtonCommand = new RelayCommand((o) => { MoveTo(3); },
+                   (o) => thirdCommand != null);
         }
         public void MoveTo(int num)
         {
@@ -48,13 +48,13 @@ namespace KURSACHciCHARPnigga
                 switch (num)
                 {
                     case 1:
-                        OurPos = OurPos?.FirstRoom;
+                        OurPos = OurPos?.firstRoom;
                         break;
                     case 2:
-                        OurPos = OurPos?.SecondRoom;
+                        OurPos = OurPos?.secondRoom;
                         break;
                     case 3:
-                        OurPos = OurPos?.ThirdRoom;
+                        OurPos = OurPos?.thirdRoom;
                         break;
                     default:
                         break;
