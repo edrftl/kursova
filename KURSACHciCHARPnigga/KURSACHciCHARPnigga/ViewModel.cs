@@ -10,10 +10,7 @@ namespace KURSACHciCHARPnigga
 {
     public class ViewModel : INotifyPropertyChanged
     {
-
-        //public List<Room> rooms = new List<Room>();
-
-        private readonly MyDB dbContext;
+        MyDB dbContext;
 
         private Room _ourPos;
 
@@ -44,7 +41,6 @@ namespace KURSACHciCHARPnigga
             secondButtonCommand = new RelayCommand((o) => { MoveTo(2); }, (o) => secondButtonCommand != null);
             thirdButtonCommand = new RelayCommand((o) => { MoveTo(3); }, (o) => thirdButtonCommand != null);
         }
-
         public void MoveTo(int num)
         {
             if (OurPos != null)
@@ -52,13 +48,13 @@ namespace KURSACHciCHARPnigga
                 switch (num)
                 {
                     case 1:
-                        OurPos = OurPos?.firstRoom;
+                        OurPos = OurPos?.FirstRoom;
                         break;
                     case 2:
-                        OurPos = OurPos?.secondRoom;
+                        OurPos = OurPos?.SecondRoom;
                         break;
                     case 3:
-                        OurPos = OurPos?.thirdRoom;
+                        OurPos = OurPos?.ThirdRoom;
                         break;
                     default:
                         break;

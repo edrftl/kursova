@@ -35,9 +35,6 @@ namespace KURSACHciCHARPnigga
 
         }
 
-        
-
-
         //private void CreateRooms()
         //{
         //    Room room1 = new Room("Room1 try \n to escape\n labirint");
@@ -99,11 +96,11 @@ namespace KURSACHciCHARPnigga
         //}
 
 
-        //private void Window_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    //CreateRooms();
-        //    //_viewModel.OurPos = rooms[0];
-        //}
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //CreateRooms();
+            _viewModel.OurPos = dbContext.Rooms.ToList()[0];
+        }
 
     }
 }
