@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 namespace KURSACHciCHARPnigga
 {
     class MyDB : DbContext
@@ -45,23 +46,23 @@ namespace KURSACHciCHARPnigga
                 new Room { Id = 17, NameOfRoom = "Room 17" },
                 new Room { Id = 18, NameOfRoom = "You won" }
             );
-            modelBuilder.Entity<Room>()
-                .HasOne(r => r.firstRoom)
-                .WithMany()
-                .HasForeignKey(r => r.FirstRoomId)
-                .OnDelete(DeleteBehavior.Restrict);
+        //    modelBuilder.Entity<Room>()
+        //        .HasOne(r => r.firstRoom)
+        //        .WithMany()
+        //        .HasForeignKey(r => r.FirstRoomId)
+        //        .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Room>()
-                .HasOne(r => r.secondRoom)
-                .WithMany()
-                .HasForeignKey(r => r.SecondRoomId)
-                .OnDelete(DeleteBehavior.Restrict);
+        //    modelBuilder.Entity<Room>()
+        //        .HasOne(r => r.secondRoom)
+        //        .WithMany()
+        //        .HasForeignKey(r => r.SecondRoomId)
+        //        .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Room>()
-                .HasOne(r => r.thirdRoom)
-                .WithMany()
-                .HasForeignKey(r => r.ThirdRoomId)
-                .OnDelete(DeleteBehavior.Restrict);
+        //    modelBuilder.Entity<Room>()
+        //        .HasOne(r => r.thirdRoom)
+        //        .WithMany()
+        //        .HasForeignKey(r => r.ThirdRoomId)
+        //        .OnDelete(DeleteBehavior.Restrict);
         }
 
 
@@ -72,37 +73,63 @@ namespace KURSACHciCHARPnigga
 
 
         public void SeedRandomRoomAssignments()
-        {
-            //using (var context = new MyDB())
-            //{
-            var random = new Random();
-            var rooms = this.Rooms.ToList();
-
-            foreach (var room in rooms)
             {
-                room.firstRoom = GetRandomRoom(rooms, random);
-                room.secondRoom = GetRandomRoom(rooms, random);
-                room.thirdRoom = GetRandomRoom(rooms, random);
+                try
+                {
+                    //using (var context = new MyDB())
+                    //{
+                    var random = new Random();
+                    var rooms = this.Rooms.ToList();
+
+                    foreach (var room in rooms)
+                    {
+                        room.firstRoom = GetRandomRoom(rooms, random);
+                        room.secondRoom = GetRandomRoom(rooms, random);
+                        room.thirdRoom = GetRandomRoom(rooms, random);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error");
+                    //return null;
+                }
             }
-            //}
+
+            private Room GetRandomRoom(List<Room> rooms, Random random)
+            {
+                try
+                {
+                    // Exclude the current room from the available choices
+                    var availableRooms = rooms.Where(r => r.Id != 18).ToList();
+
+                    // Return a random room from the available choices
+                    return availableRooms[random.Next(availableRooms.Count)];
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error");
+                    return null;
+                }
+
+            }
+            public void SeedData()
+            {
+                try
+                {
+                    SeedRandomRoomAssignments();
+                    SaveChanges(); // Save changes to the database
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error");
+                    //return null;
+                }
+            }
+
+
+
+
         }
-
-        private Room GetRandomRoom(List<Room> rooms, Random random)
-        {
-            // Exclude the current room from the available choices
-            var availableRooms = rooms.Where(r => r.Id != 18).ToList();
-
-            // Return a random room from the available choices
-            return availableRooms[random.Next(availableRooms.Count)];
-        }
-        public void SeedData()
-        {
-            SeedRandomRoomAssignments();
-            SaveChanges(); // Save changes to the database
-        }
-
-
-
-
     }
-}
+
+

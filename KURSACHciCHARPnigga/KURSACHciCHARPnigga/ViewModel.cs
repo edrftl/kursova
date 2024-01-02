@@ -11,8 +11,9 @@ namespace KURSACHciCHARPnigga
     public class ViewModel : INotifyPropertyChanged
     {
 
-       // public List<Room> rooms = new List<Room>();
+        //public List<Room> rooms = new List<Room>();
 
+        private readonly MyDB dbContext;
 
         private Room _ourPos;
 
@@ -36,15 +37,14 @@ namespace KURSACHciCHARPnigga
         public ICommand firstCommand => firstButtonCommand;
         public ICommand secondCommand => secondButtonCommand;
         public ICommand thirdCommand => thirdButtonCommand;
-        public ViewModel()
+        internal ViewModel(MyDB dbContext)
         {
-            firstButtonCommand = new RelayCommand((o) => { MoveTo(1); },
-                    (o) => firstCommand != null);
-            secondButtonCommand = new RelayCommand((o) => { MoveTo(2); },
-                    (o) => secondCommand != null);
-            thirdButtonCommand = new RelayCommand((o) => { MoveTo(3); },
-                   (o) => thirdCommand != null);
+            this.dbContext = dbContext;
+            firstButtonCommand = new RelayCommand((o) => { MoveTo(1); }, (o) => firstButtonCommand != null);
+            secondButtonCommand = new RelayCommand((o) => { MoveTo(2); }, (o) => secondButtonCommand != null);
+            thirdButtonCommand = new RelayCommand((o) => { MoveTo(3); }, (o) => thirdButtonCommand != null);
         }
+
         public void MoveTo(int num)
         {
             if (OurPos != null)

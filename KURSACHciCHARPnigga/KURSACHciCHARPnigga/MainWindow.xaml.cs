@@ -21,17 +21,17 @@ namespace KURSACHciCHARPnigga
     public partial class MainWindow : Window
     {
         private ViewModel _viewModel;
-        private MyDB dbContext;
+        MyDB dbContext = new MyDB();
 
         public MainWindow()
         {
             InitializeComponent();
-            dbContext = new MyDB();
-            _viewModel = new ViewModel();
+            //dbContext = new MyDB();
+            _viewModel = new ViewModel(dbContext);
             DataContext = _viewModel;
 
             // Seed data after initializing the database context
-            dbContext.SeedData();
+            //dbContext.SeedData();
 
         }
 
