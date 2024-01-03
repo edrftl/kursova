@@ -4016,24 +4016,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\user\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Ілля\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\спрайти\\kursova\\KURSACHciCHARPnigga\\KURSACHciCHARPnigga\\KURSACHciCHARPnigga.csproj",
+      "projectUniqueName": "C:\\Users\\Ілля\\Documents\\GitHub\\kursova\\KURSACHciCHARPnigga\\KURSACHciCHARPnigga\\KURSACHciCHARPnigga.csproj",
       "projectName": "KURSACHciCHARPnigga",
-      "projectPath": "D:\\спрайти\\kursova\\KURSACHciCHARPnigga\\KURSACHciCHARPnigga\\KURSACHciCHARPnigga.csproj",
-      "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "D:\\спрайти\\kursova\\KURSACHciCHARPnigga\\KURSACHciCHARPnigga\\obj\\",
+      "projectPath": "C:\\Users\\Ілля\\Documents\\GitHub\\kursova\\KURSACHciCHARPnigga\\KURSACHciCHARPnigga\\KURSACHciCHARPnigga.csproj",
+      "packagesPath": "C:\\Users\\Ілля\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Ілля\\Documents\\GitHub\\kursova\\KURSACHciCHARPnigga\\KURSACHciCHARPnigga\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\Ілля\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4041,7 +4036,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

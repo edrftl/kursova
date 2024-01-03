@@ -47,15 +47,15 @@ namespace KURSACHciCHARPnigga
             {
                 switch (num)
                 {
-                    case 1:
-                        OurPos = OurPos?.firstRoom;
-                        break;
-                    case 2:
-                        OurPos = OurPos?.secondRoom;
-                        break;
-                    case 3:
-                        OurPos = OurPos?.thirdRoom;
-                        break;
+                    //case 1:
+                    //    OurPos = OurPos?.firstRoom;
+                    //    break;
+                    //case 2:
+                    //    OurPos = OurPos?.secondRoom;
+                    //    break;
+                    //case 3:
+                    //    OurPos = OurPos?.thirdRoom;
+                    //    break;
                     default:
                         break;
                 }
