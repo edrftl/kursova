@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows;
 namespace KURSACHciCHARPnigga
 {
-    class MyDB : DbContext
+    public class MyDB : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -18,6 +18,12 @@ namespace KURSACHciCHARPnigga
         }
 
         public DbSet<Room> Rooms { get; set; }
+
+        public Room getRoom(int roomId)
+        {
+            var room = this.Rooms.Find(roomId);
+            return room;
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -42,7 +48,7 @@ namespace KURSACHciCHARPnigga
                  new Room { Id = 15, NameOfRoom = "Room 15", FirstRoomId = 17, SecondRoomId = 16, ThirdRoomId = 14 },
                  new Room { Id = 16, NameOfRoom = "Room 16", FirstRoomId = 17, SecondRoomId = 16, ThirdRoomId = 14 },
                  new Room { Id = 17, NameOfRoom = "Room 17", FirstRoomId = 16, SecondRoomId = 18, ThirdRoomId = 15 },
-                 new Room { Id = 18, NameOfRoom = "Room 18", FirstRoomId = null, SecondRoomId = null, ThirdRoomId = null }
+                 new Room { Id = 18, NameOfRoom = "You Won!!!", FirstRoomId = null, SecondRoomId = null, ThirdRoomId = null }
 
              );
         }

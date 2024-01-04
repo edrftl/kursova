@@ -10,6 +10,8 @@ namespace KURSACHciCHARPnigga
 {
     public class ViewModel : INotifyPropertyChanged
     {
+
+        MyDB dbContext = new MyDB();
         private Room _ourPos;
 
         public Room OurPos
@@ -22,9 +24,12 @@ namespace KURSACHciCHARPnigga
                     _ourPos = value;
                     OnPropertyChanged(nameof(OurPos));
                     OnPropertyChanged(nameof(PlaceName));
+                    //OnPropertyChanged(nameof(PlaceName));
                 }
             }
         }
+
+
         RelayCommand firstButtonCommand;
         RelayCommand secondButtonCommand;
         RelayCommand thirdButtonCommand;
@@ -32,6 +37,9 @@ namespace KURSACHciCHARPnigga
         public ICommand firstCommand => firstButtonCommand;
         public ICommand secondCommand => secondButtonCommand;
         public ICommand thirdCommand => thirdButtonCommand;
+
+
+
         public ViewModel()
         {
             firstButtonCommand = new RelayCommand((o) => { MoveTo(1); },
@@ -41,37 +49,35 @@ namespace KURSACHciCHARPnigga
             thirdButtonCommand = new RelayCommand((o) => { MoveTo(3); },
                    (o) => thirdCommand != null);
         }
+
         public void MoveTo(int num)
         {
             if (OurPos != null)
             {
                 switch (num)
                 {
-                    //case 1:
-                    //    OurPos = OurPos?.firstRoom;
-                    //    break;
-                    //case 2:
-                    //    OurPos = OurPos?.secondRoom;
-                    //    break;
-                    //case 3:
-                    //    OurPos = OurPos?.thirdRoom;
-                    //    break;
+                    case 1:
+                        OurPos = dbContext.getRoom((int)OurPos?.FirstRoomId);
+                        break;
+                    case 2:
+                        OurPos = dbContext.getRoom((int)OurPos?.SecondRoomId);
+                        break;
+                    case 3:
+                        OurPos = dbContext.getRoom((int)OurPos?.ThirdRoomId);
+                        break;
                     default:
                         break;
                 }
             }
         }
-
-
-
         public string PlaceName => OurPos?.NameOfRoom;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-    }
 
+    }
 }

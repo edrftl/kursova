@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KURSACHciCHARPnigga"
         mc:Ignorable="d"
+        Loaded="Window_Loaded"
         Title="MainWindow" Height="600" Width="800">
     <Window.Resources>
         <Style x:Key="RoundButtonStyle" TargetType="Button">
@@ -20,9 +21,9 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="10">
+                         BorderBrush="{TemplateBinding BorderBrush}"
+                         BorderThickness="{TemplateBinding BorderThickness}"
+                         CornerRadius="10">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
@@ -35,7 +36,7 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Grid >
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
@@ -47,9 +48,23 @@
             <Button x:Name="Button2" Style="{StaticResource RoundButtonStyle}" DockPanel.Dock="Bottom" MinHeight="100" Command="{Binding secondCommand}">Go here</Button>
             <Button x:Name="Button1" Style="{StaticResource RoundButtonStyle}" DockPanel.Dock="Bottom" MinHeight="100" Height="100" Command="{Binding thirdCommand}">Go here</Button>
         </DockPanel>
+
+
+        <!--Content="{Binding PlaceName}"-->
+
+        <!--Style="{StaticResource RoundButtonStyle}"
+     Style="{StaticResource RoundButtonStyle}"
+     Style="{StaticResource RoundButtonStyle}"-->
+
+
+
+        <!--Command="{Binding firstCommand}" 
+     Command="{Binding secondCommand}"
+     Command="{Binding thirdCommand}"-->
         <!--Чат-->
         <DockPanel Grid.Column="1">
-            
+
         </DockPanel>
+
     </Grid>
 </Window>
