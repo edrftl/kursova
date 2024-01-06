@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KURSACHciCHARPnigga.Migrations
 {
     [DbContext(typeof(MyDB))]
-    [Migration("20240103203612_Test")]
-    partial class Test
+    [Migration("20240104194118_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -190,7 +190,7 @@ namespace KURSACHciCHARPnigga.Migrations
                         new
                         {
                             Id = 18,
-                            NameOfRoom = "Room 18"
+                            NameOfRoom = "You Won!!!"
                         });
                 });
 #pragma warning restore 612, 618

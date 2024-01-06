@@ -48,22 +48,14 @@
             <Button x:Name="Button2" Style="{StaticResource RoundButtonStyle}" DockPanel.Dock="Bottom" MinHeight="100" Command="{Binding secondCommand}">Go here</Button>
             <Button x:Name="Button1" Style="{StaticResource RoundButtonStyle}" DockPanel.Dock="Bottom" MinHeight="100" Height="100" Command="{Binding thirdCommand}">Go here</Button>
         </DockPanel>
-
-
-        <!--Content="{Binding PlaceName}"-->
-
-        <!--Style="{StaticResource RoundButtonStyle}"
-     Style="{StaticResource RoundButtonStyle}"
-     Style="{StaticResource RoundButtonStyle}"-->
-
-
-
-        <!--Command="{Binding firstCommand}" 
-     Command="{Binding secondCommand}"
-     Command="{Binding thirdCommand}"-->
         <!--Чат-->
         <DockPanel Grid.Column="1">
-
+            <TextBlock DockPanel.Dock="Top" FontFamily="Arial Black" FontSize="50" TextAlignment="Center">CHAT</TextBlock>
+            <ListBox DockPanel.Dock="Top" x:Name="MessageLB" Height="472" ></ListBox>
+            <DockPanel DockPanel.Dock="Bottom" MaxHeight="50">
+                <TextBox x:Name="MessageTB" Width="342"></TextBox>
+                <Button x:Name="SendBut" Click="SendBut_Click"></Button>
+            </DockPanel>
         </DockPanel>
 
     </Grid>

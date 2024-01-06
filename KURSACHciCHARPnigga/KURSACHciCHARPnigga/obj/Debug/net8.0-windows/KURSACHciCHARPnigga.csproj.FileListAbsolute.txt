@@ -250,3 +250,5 @@ D:\спрайти\kursova\KURSACHciCHARPnigga\KURSACHciCHARPnigga\obj\Debug\net8
 D:\спрайти\kursova\KURSACHciCHARPnigga\KURSACHciCHARPnigga\obj\Debug\net8.0-windows\ref\KURSACHciCHARPnigga.dll
 C:\Users\Ілля\Documents\GitHub\kursova\KURSACHciCHARPnigga\KURSACHciCHARPnigga\obj\Debug\net8.0-windows\MainMenu.g.cs
 C:\Users\Ілля\Documents\GitHub\kursova\KURSACHciCHARPnigga\KURSACHciCHARPnigga\obj\Debug\net8.0-windows\MainMenu.baml
+D:\спрайти\kursova\KURSACHciCHARPnigga\KURSACHciCHARPnigga\obj\Debug\net8.0-windows\MainMenu.g.cs
+D:\спрайти\kursova\KURSACHciCHARPnigga\KURSACHciCHARPnigga\obj\Debug\net8.0-windows\MainMenu.baml

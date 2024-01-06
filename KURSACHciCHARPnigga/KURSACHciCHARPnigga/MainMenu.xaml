@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KURSACHciCHARPnigga"
         mc:Ignorable="d"
-        Title="MainMenu" Height="100" Width="500">
+        Title="MainMenu" Height="200" Width="500">
     <DockPanel>
-        <!--<Label DockPanel.Dock="Top">Name:</Label>
+        <Label DockPanel.Dock="Top">Server IP:</Label>
+        <TextBox x:Name="ServerIPTB" DockPanel.Dock="Top" Height="27" Width="150"></TextBox>
+        <Label DockPanel.Dock="Top">Name:</Label>
         <TextBox x:Name="NameTB" DockPanel.Dock="Top" Height="27"></TextBox>
-        <Button x:Name="PlayB" DockPanel.Dock="Top">Play</Button>-->
+        <Button x:Name="PlayB" DockPanel.Dock="Top" Click="PlayB_Click">Play</Button>
     </DockPanel>
 </Window>

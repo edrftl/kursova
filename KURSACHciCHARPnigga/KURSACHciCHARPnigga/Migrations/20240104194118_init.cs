@@ -7,7 +7,7 @@
 namespace KURSACHciCHARPnigga.Migrations
 {
     /// <inheritdoc />
-    public partial class Test : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,7 +50,7 @@ namespace KURSACHciCHARPnigga.Migrations
                     { 15, 17, "Room 15", 16, 14 },
                     { 16, 17, "Room 16", 16, 14 },
                     { 17, 16, "Room 17", 18, 15 },
-                    { 18, null, "Room 18", null, null }
+                    { 18, null, "You Won!!!", null, null }
                 });
         }
 

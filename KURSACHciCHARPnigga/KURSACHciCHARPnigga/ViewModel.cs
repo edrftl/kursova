@@ -24,7 +24,6 @@ namespace KURSACHciCHARPnigga
                     _ourPos = value;
                     OnPropertyChanged(nameof(OurPos));
                     OnPropertyChanged(nameof(PlaceName));
-                    //OnPropertyChanged(nameof(PlaceName));
                 }
             }
         }
@@ -57,13 +56,16 @@ namespace KURSACHciCHARPnigga
                 switch (num)
                 {
                     case 1:
-                        OurPos = dbContext.getRoom((int)OurPos?.FirstRoomId);
+                        if (dbContext.getRoom((int)OurPos?.FirstRoomId) != null)
+                            OurPos = dbContext.getRoom((int)OurPos?.FirstRoomId);
                         break;
                     case 2:
-                        OurPos = dbContext.getRoom((int)OurPos?.SecondRoomId);
+                        if (dbContext.getRoom((int)OurPos?.FirstRoomId) != null)
+                            OurPos = dbContext.getRoom((int)OurPos?.SecondRoomId);
                         break;
                     case 3:
-                        OurPos = dbContext.getRoom((int)OurPos?.ThirdRoomId);
+                        if (dbContext.getRoom((int)OurPos?.FirstRoomId) != null)
+                            OurPos = dbContext.getRoom((int)OurPos?.ThirdRoomId);
                         break;
                     default:
                         break;
