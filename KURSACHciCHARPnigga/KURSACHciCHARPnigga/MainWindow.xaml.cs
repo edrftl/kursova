@@ -50,7 +50,7 @@ namespace KURSACHciCHARPnigga
             _viewModel = new ViewModel();
             DataContext = _viewModel;
 
-            InitializeTcpClientAsync();
+            
         }
 
         private async void InitializeTcpClientAsync()
@@ -77,6 +77,7 @@ namespace KURSACHciCHARPnigga
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            InitializeTcpClientAsync();
             _viewModel.OurPos = dbContext.getRoom(1);
         }
 
