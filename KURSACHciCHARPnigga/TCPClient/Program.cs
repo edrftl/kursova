@@ -141,19 +141,19 @@ namespace TCPServer
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-LONMETH\SQLEXPRESS;
-                            Initial Catalog = PlayerLabDB;
-                            Integrated Security=True;Connect Timeout=30;
-                            Encrypt=False;Trust Server Certificate=False;
-                            Application Intent=ReadWrite;
-                            Multi Subnet Failover=False");
-
-            //optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-3A1T100\SQLEXPRESS;
+            //optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-LONMETH\SQLEXPRESS;
             //                Initial Catalog = PlayerLabDB;
             //                Integrated Security=True;Connect Timeout=30;
             //                Encrypt=False;Trust Server Certificate=False;
             //                Application Intent=ReadWrite;
             //                Multi Subnet Failover=False");
+
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-3A1T100\SQLEXPRESS;
+                            Initial Catalog = PlayerLabDB;
+                            Integrated Security=True;Connect Timeout=30;
+                            Encrypt=False;Trust Server Certificate=False;
+                            Application Intent=ReadWrite;
+                            Multi Subnet Failover=False");
         }
 
         public DbSet<Player> Players { get; set; }

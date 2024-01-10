@@ -16,5 +16,20 @@ namespace KURSACHciCHARPnigga
         public int? FirstRoomId { get; set; }
         public int? SecondRoomId { get; set; }
         public int? ThirdRoomId { get; set; }
+        public ICollection<Message> Messages { get; } = new List<Message>();
+
+    }
+
+    public class Message
+    {
+        public int Id { get; set; }
+        public int RoomId { get; set; }
+        public Room Room { get; set; } = null!;
+        public string Content { get; set; } // Add this property to represent the content of the message
+
+        public override string ToString()
+        {
+            return $"{Content}";
+        }
     }
 }

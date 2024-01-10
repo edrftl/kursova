@@ -80,14 +80,15 @@ namespace KURSACHciCHARPnigga
             {
                 while (true)
                 {
-                    await Task.Run(async () =>
+                    await Task.Run(() =>
                     {
+                        // Inside Task.Run, avoid async/await to prevent issues with disposal
                         NetworkStream ns = client.GetStream();
                         StreamReader responseReader = new StreamReader(ns);
 
                         while (!responseReader.EndOfStream)
                         {
-                            string response = await responseReader.ReadLineAsync();
+                            string response = responseReader.ReadLine();
                             string GetWord = GetWordAtIndex(response, 0);
 
                             if (GetWord == "System")
@@ -96,23 +97,23 @@ namespace KURSACHciCHARPnigga
 
                                 if (GetWord == "Logined")
                                 {
-                                    Login();
+                                    Application.Current.Dispatcher.Invoke(() => Login());
                                 }
                                 else if (GetWord == "IncorrectPassword")
                                 {
-                                    MessageBox.Show("Incorrect password");
+                                    Application.Current.Dispatcher.Invoke(() => MessageBox.Show("Incorrect password"));
                                 }
                                 else if (GetWord == "IncorrectName")
                                 {
-                                    MessageBox.Show("Incorrect name");
+                                    Application.Current.Dispatcher.Invoke(() => MessageBox.Show("Incorrect name"));
                                 }
                                 if (GetWord == "Registered")
                                 {
-                                    Login();
+                                    Application.Current.Dispatcher.Invoke(() => Login());
                                 }
                                 else if (GetWord == "NameIsTaken")
                                 {
-                                    MessageBox.Show("Name Is Taken");
+                                    Application.Current.Dispatcher.Invoke(() => MessageBox.Show("Name Is Taken"));
                                 }
                             }
                         }
@@ -123,11 +124,18 @@ namespace KURSACHciCHARPnigga
             }
             catch (IOException ex)
             {
+                // Handle IOException
                 MessageBox.Show("WTF");
+            }
+            catch (ObjectDisposedException ex)
+            {
+                // Handle ObjectDisposedException
+                MessageBox.Show("NetworkStream disposed");
             }
             catch (Exception ex)
             {
-                HandleException(ex);
+                // Handle other exceptions
+                MessageBox.Show("An unexpected error occurred: " + ex.Message);
             }
         }
 
@@ -154,6 +162,7 @@ namespace KURSACHciCHARPnigga
             }
             catch (Exception ex)
             {
+                
                 HandleException(ex);
             }
         }

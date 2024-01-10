@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -24,10 +25,26 @@ namespace KURSACHciCHARPnigga
                     _ourPos = value;
                     OnPropertyChanged(nameof(OurPos));
                     OnPropertyChanged(nameof(PlaceName));
+
+                    // Update messages when OurPos changes
+                    App.Current.Dispatcher.Invoke(() =>
+                    {
+                        Messages = new ObservableCollection<Message>(_ourPos.Messages.ToList());
+                    });
                 }
             }
         }
+        private ObservableCollection<Message> _messages;
 
+        public ObservableCollection<Message> Messages
+        {
+            get { return _messages; }
+            set
+            {
+                _messages = value;
+                OnPropertyChanged(nameof(Messages));
+            }
+        }
 
         RelayCommand firstButtonCommand;
         RelayCommand secondButtonCommand;
@@ -41,6 +58,11 @@ namespace KURSACHciCHARPnigga
 
         public ViewModel()
         {
+            OurPos = dbContext.getRoom(1); // Set the initial room
+
+            // Load messages for the initial room
+            Messages = new ObservableCollection<Message>(OurPos.Messages.ToList());
+
             firstButtonCommand = new RelayCommand((o) => { MoveTo(1); },
                     (o) => firstCommand != null);
             secondButtonCommand = new RelayCommand((o) => { MoveTo(2); },
@@ -53,22 +75,26 @@ namespace KURSACHciCHARPnigga
         {
             if (OurPos != null)
             {
+                Room newRoom = null;
+
                 switch (num)
                 {
                     case 1:
-                        if (dbContext.getRoom((int)OurPos?.FirstRoomId) != null)
-                            OurPos = dbContext.getRoom((int)OurPos?.FirstRoomId);
+                        newRoom = dbContext.getRoom((int)OurPos?.FirstRoomId);
                         break;
                     case 2:
-                        if (dbContext.getRoom((int)OurPos?.FirstRoomId) != null)
-                            OurPos = dbContext.getRoom((int)OurPos?.SecondRoomId);
+                        newRoom = dbContext.getRoom((int)OurPos?.SecondRoomId);
                         break;
                     case 3:
-                        if (dbContext.getRoom((int)OurPos?.FirstRoomId) != null)
-                            OurPos = dbContext.getRoom((int)OurPos?.ThirdRoomId);
+                        newRoom = dbContext.getRoom((int)OurPos?.ThirdRoomId);
                         break;
                     default:
                         break;
+                }
+
+                if (newRoom != null)
+                {
+                    OurPos = newRoom;
                 }
             }
         }

@@ -84,9 +84,9 @@ namespace KURSACHciCHARPnigga
         private void SendBut_Click(object sender, RoutedEventArgs e)
         {
             string message = $"{_viewModel.OurPos.NameOfRoom}- {PlayerName} : {MessageTB.Text}";
+            dbContext.addMessage(_viewModel.OurPos.Id, MessageTB.Text);
             SendMessage(message);
         }
-
         public async Task ReceiveMessagesAsync()
         {
             try
@@ -99,12 +99,11 @@ namespace KURSACHciCHARPnigga
                     string wordBeforeHyphen = GetWordBeforeHyphen(response);
                     if (wordBeforeHyphen == _viewModel.OurPos.NameOfRoom)
                     {
-
                         if (response != null)
                         {
                             Application.Current.Dispatcher.Invoke(() =>
                             {
-                                MessageLB.Items.Add(response);
+                                _viewModel.Messages.Add(new Message { Content = response });
                             });
                         }
                     }
@@ -119,6 +118,7 @@ namespace KURSACHciCHARPnigga
                 HandleException(ex);
             }
         }
+
 
         public void SendMessage(string Message)
         {

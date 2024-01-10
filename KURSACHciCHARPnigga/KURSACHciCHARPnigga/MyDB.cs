@@ -10,28 +10,60 @@ namespace KURSACHciCHARPnigga
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-LONMETH\SQLEXPRESS;
-                            Initial Catalog = RoomDb;
-                            Integrated Security=True;Connect Timeout=30;
-                            Encrypt=False;Trust Server Certificate=False;
-                            Application Intent=ReadWrite;
-                            Multi Subnet Failover=False");
-
-            //optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-3A1T100\SQLEXPRESS;
+            //optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-LONMETH\SQLEXPRESS;
             //                Initial Catalog = RoomDb;
             //                Integrated Security=True;Connect Timeout=30;
             //                Encrypt=False;Trust Server Certificate=False;
             //                Application Intent=ReadWrite;
             //                Multi Subnet Failover=False");
+
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-3A1T100\SQLEXPRESS;
+                            Initial Catalog = RoomDb;
+                            Integrated Security=True;Connect Timeout=30;
+                            Encrypt=False;Trust Server Certificate=False;
+                            Application Intent=ReadWrite;
+                            Multi Subnet Failover=False");
         }
 
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         public Room getRoom(int roomId)
         {
             var room = this.Rooms.Find(roomId);
             return room;
         }
+
+        public void addMessage(int roomId, string content)
+        {
+            try
+            {
+                var room = this.Rooms.Find(roomId);
+
+                if (room != null)
+                {
+                    var message = new Message { RoomId = roomId, Content = content };
+                    room.Messages.Add(message);
+                    this.SaveChanges(); // Save changes to the database
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                // Log or handle the exception
+                Console.WriteLine($"DbUpdateException: {ex.Message}");
+
+                // If you need more details about the exception, you can inspect the inner exception
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"Inner Exception: {ex.InnerException.Message}");
+                }
+
+                // Handle the exception as needed
+                // For example, you might want to throw it again or log it to a file
+                throw;
+            }
+        }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

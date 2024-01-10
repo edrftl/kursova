@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KURSACHciCHARPnigga")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+45ac231118f42ec439f6d99f6c6d0fc35997befd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+16989b1044de699c9d3f5b0da8a5ec8dbea5c73a")]
 [assembly: System.Reflection.AssemblyProductAttribute("KURSACHciCHARPnigga")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KURSACHciCHARPnigga")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
