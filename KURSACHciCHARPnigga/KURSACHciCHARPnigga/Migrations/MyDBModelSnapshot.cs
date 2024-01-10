@@ -22,6 +22,28 @@ namespace KURSACHciCHARPnigga.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("KURSACHciCHARPnigga.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("KURSACHciCHARPnigga.Room", b =>
                 {
                     b.Property<int>("Id")
@@ -189,6 +211,22 @@ namespace KURSACHciCHARPnigga.Migrations
                             Id = 18,
                             NameOfRoom = "You Won!!!"
                         });
+                });
+
+            modelBuilder.Entity("KURSACHciCHARPnigga.Message", b =>
+                {
+                    b.HasOne("KURSACHciCHARPnigga.Room", "Room")
+                        .WithMany("Messages")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("KURSACHciCHARPnigga.Room", b =>
+                {
+                    b.Navigation("Messages");
                 });
 #pragma warning restore 612, 618
         }

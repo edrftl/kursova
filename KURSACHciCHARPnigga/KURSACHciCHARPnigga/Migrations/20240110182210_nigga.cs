@@ -7,7 +7,7 @@
 namespace KURSACHciCHARPnigga.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class nigga : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,6 +26,26 @@ namespace KURSACHciCHARPnigga.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rooms", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoomId = table.Column<int>(type: "int", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Messages_Rooms_RoomId",
+                        column: x => x.RoomId,
+                        principalTable: "Rooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -52,11 +72,19 @@ namespace KURSACHciCHARPnigga.Migrations
                     { 17, 16, "Room 17", 18, 15 },
                     { 18, null, "You Won!!!", null, null }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_RoomId",
+                table: "Messages",
+                column: "RoomId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Messages");
+
             migrationBuilder.DropTable(
                 name: "Rooms");
         }

@@ -45,7 +45,7 @@ namespace KURSACHciCHARPnigga
 
         public MainWindow(string address, string port, string playerName)
         {
-            Address = address; Port = port;
+            Address = address; Port = port; PlayerName = playerName;
             InitializeComponent();
             _viewModel = new ViewModel();
             DataContext = _viewModel;
@@ -86,6 +86,7 @@ namespace KURSACHciCHARPnigga
             string message = $"{_viewModel.OurPos.NameOfRoom}- {PlayerName} : {MessageTB.Text}";
             dbContext.addMessage(_viewModel.OurPos.Id, MessageTB.Text);
             SendMessage(message);
+            MessageTB.Text = "";
         }
         public async Task ReceiveMessagesAsync()
         {

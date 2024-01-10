@@ -125,17 +125,17 @@ namespace KURSACHciCHARPnigga
             catch (IOException ex)
             {
                 // Handle IOException
-                MessageBox.Show("WTF");
+                //MessageBox.Show("WTF");
             }
             catch (ObjectDisposedException ex)
             {
                 // Handle ObjectDisposedException
-                MessageBox.Show("NetworkStream disposed");
+                //MessageBox.Show("NetworkStream disposed");
             }
             catch (Exception ex)
             {
                 // Handle other exceptions
-                MessageBox.Show("An unexpected error occurred: " + ex.Message);
+                //MessageBox.Show("An unexpected error occurred: " + ex.Message);
             }
         }
 
