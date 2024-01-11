@@ -11,8 +11,8 @@ using TCPServer;
 namespace TCPClient.Migrations
 {
     [DbContext(typeof(ServerDB))]
-    [Migration("20240110082710_init1")]
-    partial class init1
+    [Migration("20240111122014_ServerMig")]
+    partial class ServerMig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -53,8 +53,8 @@
             <TextBlock DockPanel.Dock="Top" FontFamily="Arial Black" FontSize="50" TextAlignment="Center">CHAT</TextBlock>
             <ListBox DockPanel.Dock="Top" ItemsSource="{Binding Path=Messages}" x:Name="MessageLB" Height="472" ></ListBox>
             <DockPanel DockPanel.Dock="Bottom" MaxHeight="50">
-                <TextBox x:Name="MessageTB" Width="342"></TextBox>
-                <Button x:Name="SendBut" Click="SendBut_Click"></Button>
+                <TextBox x:Name="MessageTB" Text="{Binding Path=MessageText}" Width="342"></TextBox>
+                <Button x:Name="SendBut" Command="{Binding sendCommand}" ></Button>
             </DockPanel>
         </DockPanel>
 

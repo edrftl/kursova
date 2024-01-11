@@ -8,14 +8,14 @@
         Title="MainMenu" Height="250" Width="500" Loaded="Window_Loaded">
     <DockPanel>
         <Label DockPanel.Dock="Top">Server IP:</Label>
-        <TextBox x:Name="ServerIPTB" DockPanel.Dock="Top" Height="27" Width="150"></TextBox>
+        <TextBox x:Name="ServerIPTB" DockPanel.Dock="Top" Text="{Binding Path = ServerIp}" Height="27" Width="150"></TextBox>
         <Label DockPanel.Dock="Top">Name:</Label>
-        <TextBox x:Name="NameTB" DockPanel.Dock="Top" Height="27"></TextBox>
+        <TextBox x:Name="NameTB" Text="{Binding Path = PlayerName}" DockPanel.Dock="Top" Height="27"></TextBox>
         <Label DockPanel.Dock="Top">Password:</Label>
-        <TextBox x:Name="PasswordTB" DockPanel.Dock="Top" Height="27"></TextBox>
+        <TextBox x:Name="PasswordTB" Text="{Binding Path = PlayerPassword}" DockPanel.Dock="Top" Height="27"></TextBox>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-            <Button x:Name="LoginB" Content="Login" Click="LoginB_Click" Width="100"></Button>
-            <Button x:Name="RegisterB" Content="Register" Click="RegisterB_Click" Width="100"></Button>
+            <Button x:Name="LoginB" Content="Login" Command="{Binding loginCommand}" Width="100"></Button>
+            <Button x:Name="RegisterB" Content="Register" Command="{Binding registerCommand}" Width="100"></Button>
         </StackPanel>
     </DockPanel>
 </Window>

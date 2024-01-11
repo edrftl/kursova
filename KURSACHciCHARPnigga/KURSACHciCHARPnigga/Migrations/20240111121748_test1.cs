@@ -7,7 +7,7 @@
 namespace KURSACHciCHARPnigga.Migrations
 {
     /// <inheritdoc />
-    public partial class nigga : Migration
+    public partial class test1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
