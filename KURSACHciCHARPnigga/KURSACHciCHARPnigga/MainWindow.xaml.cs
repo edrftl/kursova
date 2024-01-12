@@ -25,13 +25,13 @@ namespace KURSACHciCHARPnigga
     partial class MainWindow : Window
     {
 
-        MyDB dbContext = new MyDB();
-        TcpClient client;
+        //MyDB dbContext = new MyDB();
+        //TcpClient client;
         private ViewModel _viewModel;
 
-        string Address;
-        int Port;
-        string PlayerName;
+        //string Address;
+        //int Port;
+        //string PlayerName;
 
         public MainWindow()
         {
@@ -43,15 +43,15 @@ namespace KURSACHciCHARPnigga
             //this.Close();
         }
 
-        public MainWindow(string address, int port, string playerName)
-        {
-            Address = address; Port = port; PlayerName = playerName;
-            InitializeComponent();
-            _viewModel = new ViewModel();
-            DataContext = _viewModel;
+        //public MainWindow(string address, int port, string playerName)
+        //{
+        //    //Address = address; Port = port; PlayerName = playerName;
+        //    InitializeComponent();
+        //    _viewModel = new ViewModel();
+        //    DataContext = _viewModel;
 
             
-        }
+        //}
 
         //private async void InitializeTcpClientAsync()
         //{

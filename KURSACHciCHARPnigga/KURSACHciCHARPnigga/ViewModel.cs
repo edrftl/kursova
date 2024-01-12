@@ -22,7 +22,7 @@ namespace KURSACHciCHARPnigga
         MyDB dbContext = new MyDB();
         TcpClient client;
 
-        const int Port = 7654;
+        const int Port = 9876;
         const string ServetIP = "127.0.0.1";
 
 
@@ -146,14 +146,14 @@ namespace KURSACHciCHARPnigga
 
         private void RegisterBtn()
         {
-            InitializeTcpClientAsync(ServerIp, Port);
+            InitializeTcpClientAsync(ServetIP, Port);
 
             SendMessage($"Register {PlayerName} {PlayerPassword}");
         }
 
         private void LoginBtn()
         {
-            InitializeTcpClientAsync(ServerIp, Port);
+            InitializeTcpClientAsync(ServetIP, Port);
 
             SendMessage($"Login {PlayerName} {PlayerPassword}");
         }
@@ -164,23 +164,26 @@ namespace KURSACHciCHARPnigga
         {
             try
             {
-                if (string.IsNullOrEmpty(Address) || !IPAddress.TryParse(Address, out IPAddress ipAddress))
-                {
-                    //MessageBox.Show("Invalid or empty IP address");
-                    //MainMenu win = new MainMenu();
-                    //win.Show();
-                    //this.Close();
-                    //Application.Current.MainWindow?.Close();
-                    return; // Exit the method if the address is invalid
-                }
+                //if (string.IsNullOrEmpty(Address) || !IPAddress.TryParse(Address, out IPAddress ipAddress))
+                //{
+                //    return; // Exit the method if the address is invalid
+                //}
+
                 IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse(Address), Port);
                 client = new TcpClient();
-                await client.ConnectAsync(ipPoint.Address, ipPoint.Port);
 
-                await ReceiveMessagesAsync();
+                try
+                {
+                    client.Connect(ipPoint.Address, ipPoint.Port);
+                }
+                catch (Exception ex)
+                {
+                    // Handle connection error gracefully
+                    MessageBox.Show($"Error connecting to the server: {ex.Message}");
+                    return;
+                }
 
-
-
+                Task.Run(() => ReceiveMessagesAsyncForSend());
             }
             catch (Exception ex)
             {
@@ -188,76 +191,192 @@ namespace KURSACHciCHARPnigga
                 MainMenu win = new MainMenu();
                 win.Show();
                 Application.Current.MainWindow?.Close();
-
             }
         }
 
-        public async Task ReceiveMessagesAsync()
+        public void ReceiveMessagesAsyncForSend()
         {
             try
             {
                 while (true)
                 {
-
-                    await Task.Run(() =>
+                    if (client != null && client.Connected)
                     {
-                        // Inside Task.Run, avoid async/await to prevent issues with disposal
-                        using (NetworkStream ns = client.GetStream())
-                        using (StreamReader responseReader = new StreamReader(ns))
+                        NetworkStream ns = client.GetStream();
+                        // Rest of the code
+
+
+                        //if (ns == null)
+                        //{
+                        //    // Handle the case where the client is null or disposed of
+                        //    MessageBox.Show("erhuigrgh");
+                        //    return;
+                        //}
+
+                        StreamReader responseReader = new StreamReader(ns);
+
+
+                        string response = responseReader.ReadLine();
+                        string GetWord = GetWordAtIndex(response, 0);
+
+                        if (GetWord == "System")
                         {
-                            while (!responseReader.EndOfStream)
+                            GetWord = GetWordAtIndex(response, 1);
+
+                            if (GetWord == "Logined")
                             {
-                                string response = responseReader.ReadLine();
-                                string GetWord = GetWordAtIndex(response, 0);
-
-                                if (GetWord == "System")
-                                {
-                                    GetWord = GetWordAtIndex(response, 1);
-
-                                    if (GetWord == "Logined")
-                                    {
-                                        Application.Current.Dispatcher.Invoke(() => Login());
-                                    }
-                                    else if (GetWord == "IncorrectPassword")
-                                    {
-                                        Application.Current.Dispatcher.Invoke(() => MessageBox.Show("Incorrect password"));
-                                    }
-                                    else if (GetWord == "IncorrectName")
-                                    {
-                                        Application.Current.Dispatcher.Invoke(() => MessageBox.Show("Incorrect name"));
-                                    }
-                                    if (GetWord == "Registered")
-                                    {
-                                        Application.Current.Dispatcher.Invoke(() => Login());
-                                    }
-                                    else if (GetWord == "NameIsTaken")
-                                    {
-                                        Application.Current.Dispatcher.Invoke(() => MessageBox.Show("Name Is Taken"));
-                                    }
-                                }
+                                Application.Current.Dispatcher.Invoke(() => Login());
+                            }
+                            else if (GetWord == "IncorrectPassword")
+                            {
+                                Application.Current.Dispatcher.Invoke(() => MessageBox.Show("Incorrect password"));
+                            }
+                            else if (GetWord == "IncorrectName")
+                            {
+                                Application.Current.Dispatcher.Invoke(() => MessageBox.Show("Incorrect name"));
+                            }
+                            if (GetWord == "Registered")
+                            {
+                                Application.Current.Dispatcher.Invoke(() => Login());
+                            }
+                            else if (GetWord == "NameIsTaken")
+                            {
+                                Application.Current.Dispatcher.Invoke(() => MessageBox.Show("Name Is Taken"));
                             }
                         }
-                    });
+                        if (GetWord == OurPos.NameOfRoom)
+                        {
+                            if (response != null)
+                            {
+                                Application.Current.Dispatcher.Invoke(() =>
+                                {
+                                    Messages.Add(new Message { Content = response });
+                                });
+                            }
+                        }
+                    }
 
-                    await Task.Delay(100);
+                    else
+                    {
+
+                        MessageBox.Show("effe");
+                        break;
+                    }
                 }
             }
             catch (IOException ex)
             {
-                // Handle IOException
-                // MessageBox.Show("WTF");
-            }
-            catch (ObjectDisposedException ex)
-            {
-                // Handle ObjectDisposedException
-                // MessageBox.Show("NetworkStream disposed");
+                MessageBox.Show($"IOException: {ex.Message}\nStackTrace: {ex.StackTrace}");
             }
             catch (Exception ex)
             {
-                // Handle other exceptions
-                // MessageBox.Show("An unexpected error occurred: " + ex.Message);
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                HandleException(ex);
             }
+
         }
+
+
+
+
+        //public void ReceiveMessagesAsyncForSend()
+        //{
+        //    try
+        //    {
+        //        while (true)
+        //        {
+        //            NetworkStream ns = client.GetStream();
+        //            StreamReader responseReader = new StreamReader(ns);
+        //            string response =  responseReader.ReadLine();
+        //            string wordBeforeHyphen = GetWordBeforeHyphen(response);
+        //            if (wordBeforeHyphen == OurPos.NameOfRoom)
+        //            {
+        //                if (response != null)
+        //                {
+        //                    Application.Current.Dispatcher.Invoke(() =>
+        //                    {
+        //                        Messages.Add(new Message { Content = response });
+        //                    });
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (IOException ex)
+        //    {
+        //        MessageBox.Show("WTF");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        HandleException(ex);
+        //    }
+        //}
+
+        //public async Task ReceiveMessagesAsync()
+        //{
+        //    try
+        //    {
+        //        while (true)
+        //        {
+
+        //            await Task.Run(() =>
+        //            {
+        //                // Inside Task.Run, avoid async/await to prevent issues with disposal
+        //                using (NetworkStream ns = client.GetStream())
+        //                using (StreamReader responseReader = new StreamReader(ns))
+        //                {
+        //                    while (!responseReader.EndOfStream)
+        //                    {
+        //                        string response = responseReader.ReadLine();
+        //                        string GetWord = GetWordAtIndex(response, 0);
+
+        //                        if (GetWord == "System")
+        //                        {
+        //                            GetWord = GetWordAtIndex(response, 1);
+
+        //                            if (GetWord == "Logined")
+        //                            {
+        //                                Application.Current.Dispatcher.Invoke(() => Login());
+        //                            }
+        //                            else if (GetWord == "IncorrectPassword")
+        //                            {
+        //                                Application.Current.Dispatcher.Invoke(() => MessageBox.Show("Incorrect password"));
+        //                            }
+        //                            else if (GetWord == "IncorrectName")
+        //                            {
+        //                                Application.Current.Dispatcher.Invoke(() => MessageBox.Show("Incorrect name"));
+        //                            }
+        //                            if (GetWord == "Registered")
+        //                            {
+        //                                Application.Current.Dispatcher.Invoke(() => Login());
+        //                            }
+        //                            else if (GetWord == "NameIsTaken")
+        //                            {
+        //                                Application.Current.Dispatcher.Invoke(() => MessageBox.Show("Name Is Taken"));
+        //                            }
+        //                        }
+        //                    }
+        //                }
+        //            });
+
+        //            await Task.Delay(100);
+        //        }
+        //    }
+        //    catch (IOException ex)
+        //    {
+        //        //Handle IOException
+        //         MessageBox.Show("WTF");
+        //    }
+        //    catch (ObjectDisposedException ex)
+        //    {
+        //        // Handle ObjectDisposedException
+        //         MessageBox.Show("NetworkStream disposed");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Handle other exceptions
+        //         MessageBox.Show("An unexpected error occurred: " + ex.Message);
+        //    }
+        //}
 
 
         //public async Task ReceiveMessagesAsync()
@@ -331,7 +450,7 @@ namespace KURSACHciCHARPnigga
             Disconnect();
 
 
-            MainWindow window = new MainWindow(ServerIp, Port, PlayerName);
+            MainWindow window = new MainWindow(/*ServerIp, Port, PlayerName*/);
             window.Show();
 
             // Закриття вікна MainMenu
@@ -344,16 +463,21 @@ namespace KURSACHciCHARPnigga
         {
             try
             {
+
                 if (client != null && client.Connected)
                 {
                     client.GetStream().Close();
                     client.Close();
                 }
+
+
+
             }
             catch (Exception ex)
             {
+                MessageBox.Show("WTF");
 
-                HandleException(ex);
+                //HandleException(ex);
             }
         }
         public static string GetWordAtIndex(string input, int index)
@@ -371,27 +495,56 @@ namespace KURSACHciCHARPnigga
         }
         private void HandleException(Exception ex)
         {
-            MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            MessageBox.Show($"An unexpected error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
+            //MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
         public void SendMessage(string Message)
         {
-            //try
-            //{
-                NetworkStream ns = client.GetStream();
+            try
+            {
+                if (client != null && client.Connected)
+                {
+                    NetworkStream ns = client.GetStream();
 
-                // Serialize the string to JSON and send it to the server
-                string jsonRequest = JsonSerializer.Serialize(Message);
-                StreamWriter sw = new StreamWriter(ns);
-                sw.WriteLine(jsonRequest);
-                sw.Flush();
+                    // Serialize the string to JSON and send it to the server
+                    string jsonRequest = JsonSerializer.Serialize(Message);
+                    StreamWriter sw = new StreamWriter(ns);
+                    sw.WriteLine(jsonRequest);
+                    sw.Flush();
 
-                //Message = "";
-            //}
-            //catch (Exception ex)
-            //{
-            //    HandleException(ex);
-            //}
+                    Message = "";
+                }
+                else
+                {
+                    MessageBox.Show("Client is null or not connected.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
+        private static string GetWordBeforeHyphen(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return string.Empty;
+            }
+
+            int hyphenIndex = input.IndexOf('-');
+
+            if (hyphenIndex > 0)
+            {
+                string beforeHyphen = input.Substring(0, hyphenIndex).Trim();
+                return beforeHyphen;
+            }
+
+            return string.Empty;
+        }
+
+
         public string PlaceName => OurPos?.NameOfRoom;
 
         public event PropertyChangedEventHandler? PropertyChanged;

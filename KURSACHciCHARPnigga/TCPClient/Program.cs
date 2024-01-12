@@ -16,14 +16,15 @@ namespace TCPServer
 {
     internal class Program
     {
-        static int port = 7654;
+        static int port = 9876;
         static string address = "127.0.0.1";
         static List<TcpClient> clients = new List<TcpClient>();
+        static ServerDB dbContext = new ServerDB();
         static readonly object lockObject = new object();
 
         static void Main(string[] args)
         {
-            IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse(address), port);
+            IPEndPoint ipPoint = new IPEndPoint(IPAddress.Any, port);
             TcpListener listener = new TcpListener(ipPoint);
 
             listener.Start(10);
@@ -34,34 +35,36 @@ namespace TCPServer
                 TcpClient client = listener.AcceptTcpClient();
                 clients.Add(client);
 
-                Task.Run(() => WorkWithClient(client));
+                WorkWithClient(client);
             }
         }
 
         static void WorkWithClient(TcpClient client)
         {
-            Console.WriteLine($"New client connected: {((IPEndPoint)client.Client.RemoteEndPoint).Address}");
-
-            using (var dbContext = new ServerDB()) 
+            Task.Run(() =>
             {
+                //Console.WriteLine($"New client connected: {((IPEndPoint)client.Client.RemoteEndPoint).Address}");
+
                 NetworkStream ns = client.GetStream();
 
-                while (true)
-                {
-                    StreamReader sr = new StreamReader(ns);
-
-                    string jsonRequest = sr.ReadLine();
-
-                    try
+               
+               StreamReader sr = new StreamReader(ns);
+            while (true)
+            {
+                try
                     {
+                    string jsonRequest = sr.ReadLine();
                         string message = JsonSerializer.Deserialize<string>(jsonRequest);
                         Console.WriteLine(message);
+                        Console.WriteLine("jiwehjiehrjt");
+
 
                         string firstMessage = GetWordAtIndex(message, 0);
                         if (firstMessage == "Login")
                         {
                             dbContext.Login(GetWordAtIndex(message, 1), GetWordAtIndex(message, 2));
-                            DisconnectClient(client); // Disconnect after handling Login
+                            Console.WriteLine("dshjfh");
+                        DisconnectClient(client); // Disconnect after handling Login
                         }
                         else if (firstMessage == "Register")
                         {
@@ -78,7 +81,7 @@ namespace TCPServer
                         Console.WriteLine($"Error deserializing JSON: {ex.Message}");
                     }
                 }
-            }
+            });
         }
 
         static void DisconnectClient(TcpClient client)
@@ -87,10 +90,17 @@ namespace TCPServer
             {
                 try
                 {
-                    clients.Remove(client);
-                    client.GetStream().Close();
-                    client.Close();
-                    Console.WriteLine($"Client disconnected: {((IPEndPoint)client.Client.RemoteEndPoint).Address}");
+                    if (client != null && client.GetStream() != null && client.Client != null)
+                    {
+                        clients.Remove(client);
+                        client.GetStream().Close();
+                        client.Close();
+                       // Console.WriteLine($"Client disconnected: {((IPEndPoint)client.Client.RemoteEndPoint).Address}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Client or its properties are null.");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -98,6 +108,8 @@ namespace TCPServer
                 }
             }
         }
+
+
 
         public static void BroadcastMessage(string message)
         {
@@ -112,6 +124,7 @@ namespace TCPServer
                         sw.WriteLine(message);
                         sw.Flush();
                         Console.WriteLine($"Broadcasted message : {message}");
+                       // Console.WriteLine($"uhfuerue");
                     }
                     catch (Exception ex)
                     {
