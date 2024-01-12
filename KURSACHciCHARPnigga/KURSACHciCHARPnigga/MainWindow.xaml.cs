@@ -31,7 +31,6 @@ namespace KURSACHciCHARPnigga
 
         //string Address;
         //int Port;
-        //string PlayerName;
 
         public MainWindow()
         {
@@ -43,12 +42,13 @@ namespace KURSACHciCHARPnigga
             //this.Close();
         }
 
-        public MainWindow(string address, int port)
+        public MainWindow(string address, int port, string playerName)
         {
-            //Address = address; Port = port; PlayerName = playerName;
+            //Address = address; Port = port; 
             InitializeComponent();
             _viewModel = new ViewModel();
             DataContext = _viewModel;
+            _viewModel.Name = playerName;
             _viewModel.InitializeTcpClientAsync(address, port, false);
 
 

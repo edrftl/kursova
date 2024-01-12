@@ -25,6 +25,7 @@ namespace KURSACHciCHARPnigga
         const int Port = 9876;
         const string ServetIP = "127.0.0.1";
 
+        public string Name;
 
         private Room _ourPos;
 
@@ -134,7 +135,7 @@ namespace KURSACHciCHARPnigga
 
         private void SendBtn()
         {
-            string message = $"{OurPos.NameOfRoom}- {PlayerName} : {MessageText}";
+            string message = $"{OurPos.NameOfRoom}- {Name} : {MessageText}";
             dbContext.addMessage(OurPos.Id, MessageText);
             SendMessage(message);
         }
@@ -146,6 +147,7 @@ namespace KURSACHciCHARPnigga
         private void RegisterBtn()
         {
             InitializeTcpClientAsync(ServetIP, Port, true);
+            Name = PlayerName;
 
             SendMessage($"Register {PlayerName} {PlayerPassword}");
         }
@@ -153,6 +155,7 @@ namespace KURSACHciCHARPnigga
         private void LoginBtn()
         {
             InitializeTcpClientAsync(ServetIP, Port, true);
+            Name = PlayerName;
 
             SendMessage($"Login {PlayerName} {PlayerPassword}");
         }
@@ -244,13 +247,8 @@ namespace KURSACHciCHARPnigga
                     }
                 }
             }
-            catch (IOException ex)
-            {
-                MessageBox.Show($"IOException: {ex.Message}\nStackTrace: {ex.StackTrace}");
-            }
             catch (Exception ex)
             {
-                MessageBox.Show($"An unexpected error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 HandleException(ex);
             }
 
@@ -464,7 +462,7 @@ namespace KURSACHciCHARPnigga
             Disconnect();
 
 
-            MainWindow window = new MainWindow(ServerIp, Port);
+            MainWindow window = new MainWindow(ServerIp, Port, PlayerName);
             window.Show();
 
             // Закриття вікна MainMenu
