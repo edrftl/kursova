@@ -137,7 +137,6 @@ namespace KURSACHciCHARPnigga
             string message = $"{OurPos.NameOfRoom}- {PlayerName} : {MessageText}";
             dbContext.addMessage(OurPos.Id, MessageText);
             SendMessage(message);
-            MessageText = "";
         }
 
 
@@ -146,21 +145,21 @@ namespace KURSACHciCHARPnigga
 
         private void RegisterBtn()
         {
-            InitializeTcpClientAsync(ServetIP, Port);
+            InitializeTcpClientAsync(ServetIP, Port, true);
 
             SendMessage($"Register {PlayerName} {PlayerPassword}");
         }
 
         private void LoginBtn()
         {
-            InitializeTcpClientAsync(ServetIP, Port);
+            InitializeTcpClientAsync(ServetIP, Port, true);
 
             SendMessage($"Login {PlayerName} {PlayerPassword}");
         }
 
 
 
-        public async void InitializeTcpClientAsync(string Address, int Port)
+        public async void InitializeTcpClientAsync(string Address, int Port, bool IsMenu)
         {
             try
             {
@@ -183,7 +182,14 @@ namespace KURSACHciCHARPnigga
                     return;
                 }
 
-                Task.Run(() => ReceiveMessagesAsyncForSend());
+                if (IsMenu == true)
+                {
+                    Task.Run(() => ReceiveMessagesAsyncForSendInMenu());
+                }
+                else
+                {
+                    Task.Run(() => ReceiveMessagesAsyncForSend());
+                }
             }
             catch (Exception ex)
             {
@@ -194,7 +200,7 @@ namespace KURSACHciCHARPnigga
             }
         }
 
-        public void ReceiveMessagesAsyncForSend()
+        public void ReceiveMessagesAsyncForSendInMenu()
         {
             try
             {
@@ -203,15 +209,6 @@ namespace KURSACHciCHARPnigga
                     if (client != null && client.Connected)
                     {
                         NetworkStream ns = client.GetStream();
-                        // Rest of the code
-
-
-                        //if (ns == null)
-                        //{
-                        //    // Handle the case where the client is null or disposed of
-                        //    MessageBox.Show("erhuigrgh");
-                        //    return;
-                        //}
 
                         StreamReader responseReader = new StreamReader(ns);
 
@@ -244,23 +241,40 @@ namespace KURSACHciCHARPnigga
                                 Application.Current.Dispatcher.Invoke(() => MessageBox.Show("Name Is Taken"));
                             }
                         }
-                        if (GetWord == OurPos.NameOfRoom)
-                        {
-                            if (response != null)
-                            {
-                                Application.Current.Dispatcher.Invoke(() =>
-                                {
-                                    Messages.Add(new Message { Content = response });
-                                });
-                            }
-                        }
                     }
+                }
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show($"IOException: {ex.Message}\nStackTrace: {ex.StackTrace}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                HandleException(ex);
+            }
 
-                    else
+        }
+
+        public async void ReceiveMessagesAsyncForSend()
+        {
+            try
+            {
+                while (true)
+                {
+                    NetworkStream ns = client.GetStream();
+                    StreamReader responseReader = new StreamReader(ns);
+                    string response = await responseReader.ReadLineAsync();
+                    string wordBeforeHyphen = GetWordBeforeHyphen(response);
+                    if (wordBeforeHyphen == OurPos.NameOfRoom)
                     {
-
-                        MessageBox.Show("effe");
-                        break;
+                        if (response != null)
+                        {
+                            Application.Current.Dispatcher.Invoke(() =>
+                            {
+                                Messages.Add(new Message { Content = response });
+                            });
+                        }
                     }
                 }
             }
@@ -450,7 +464,7 @@ namespace KURSACHciCHARPnigga
             Disconnect();
 
 
-            MainWindow window = new MainWindow(/*ServerIp, Port, PlayerName*/);
+            MainWindow window = new MainWindow(ServerIp, Port);
             window.Show();
 
             // Закриття вікна MainMenu

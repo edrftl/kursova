@@ -24,7 +24,7 @@ namespace TCPServer
 
         static void Main(string[] args)
         {
-            IPEndPoint ipPoint = new IPEndPoint(IPAddress.Any, port);
+            IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse(address), port);
             TcpListener listener = new TcpListener(ipPoint);
 
             listener.Start(10);
@@ -56,14 +56,14 @@ namespace TCPServer
                     string jsonRequest = sr.ReadLine();
                         string message = JsonSerializer.Deserialize<string>(jsonRequest);
                         Console.WriteLine(message);
-                        Console.WriteLine("jiwehjiehrjt");
+                        //Console.WriteLine("jiwehjiehrjt");
 
 
                         string firstMessage = GetWordAtIndex(message, 0);
                         if (firstMessage == "Login")
                         {
                             dbContext.Login(GetWordAtIndex(message, 1), GetWordAtIndex(message, 2));
-                            Console.WriteLine("dshjfh");
+                            Console.WriteLine("Logined");
                         DisconnectClient(client); // Disconnect after handling Login
                         }
                         else if (firstMessage == "Register")
@@ -153,19 +153,19 @@ namespace TCPServer
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-LONMETH\SQLEXPRESS;
-            //                Initial Catalog = PlayerLabDB;
-            //                Integrated Security=True;Connect Timeout=30;
-            //                Encrypt=False;Trust Server Certificate=False;
-            //                Application Intent=ReadWrite;
-            //                Multi Subnet Failover=False");
-
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-3A1T100\SQLEXPRESS;
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-LONMETH\SQLEXPRESS;
                             Initial Catalog = PlayerLabDB;
                             Integrated Security=True;Connect Timeout=30;
                             Encrypt=False;Trust Server Certificate=False;
                             Application Intent=ReadWrite;
                             Multi Subnet Failover=False");
+
+            //optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-3A1T100\SQLEXPRESS;
+            //                Initial Catalog = PlayerLabDB;
+            //                Integrated Security=True;Connect Timeout=30;
+            //                Encrypt=False;Trust Server Certificate=False;
+            //                Application Intent=ReadWrite;
+            //                Multi Subnet Failover=False");
         }
 
         public DbSet<Player> Players { get; set; }

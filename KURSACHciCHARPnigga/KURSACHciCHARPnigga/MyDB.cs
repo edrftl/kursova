@@ -10,19 +10,19 @@ namespace KURSACHciCHARPnigga
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-LONMETH\SQLEXPRESS;
-            //                Initial Catalog = RoomDb;
-            //                Integrated Security=True;Connect Timeout=30;
-            //                Encrypt=False;Trust Server Certificate=False;
-            //                Application Intent=ReadWrite;
-            //                Multi Subnet Failover=False");
-
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-3A1T100\SQLEXPRESS;
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-LONMETH\SQLEXPRESS;
                             Initial Catalog = RoomDb;
                             Integrated Security=True;Connect Timeout=30;
                             Encrypt=False;Trust Server Certificate=False;
                             Application Intent=ReadWrite;
                             Multi Subnet Failover=False");
+
+            //optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-3A1T100\SQLEXPRESS;
+            //                Initial Catalog = RoomDb;
+            //                Integrated Security=True;Connect Timeout=30;
+            //                Encrypt=False;Trust Server Certificate=False;
+            //                Application Intent=ReadWrite;
+            //                Multi Subnet Failover=False");
         }
 
         public DbSet<Room> Rooms { get; set; }

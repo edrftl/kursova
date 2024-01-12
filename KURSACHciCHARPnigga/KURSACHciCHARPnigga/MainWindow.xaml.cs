@@ -43,15 +43,16 @@ namespace KURSACHciCHARPnigga
             //this.Close();
         }
 
-        //public MainWindow(string address, int port, string playerName)
-        //{
-        //    //Address = address; Port = port; PlayerName = playerName;
-        //    InitializeComponent();
-        //    _viewModel = new ViewModel();
-        //    DataContext = _viewModel;
+        public MainWindow(string address, int port)
+        {
+            //Address = address; Port = port; PlayerName = playerName;
+            InitializeComponent();
+            _viewModel = new ViewModel();
+            DataContext = _viewModel;
+            _viewModel.InitializeTcpClientAsync(address, port, false);
 
-            
-        //}
+
+        }
 
         //private async void InitializeTcpClientAsync()
         //{
