@@ -104,29 +104,36 @@ namespace KURSACHciCHARPnigga
 
         public void MoveTo(int num)
         {
-            if (OurPos != null)
+            try
             {
-                Room newRoom = null;
-
-                switch (num)
+                if (OurPos != null)
                 {
-                    case 1:
-                        newRoom = dbContext.getRoom((int)OurPos?.FirstRoomId);
-                        break;
-                    case 2:
-                        newRoom = dbContext.getRoom((int)OurPos?.SecondRoomId);
-                        break;
-                    case 3:
-                        newRoom = dbContext.getRoom((int)OurPos?.ThirdRoomId);
-                        break;
-                    default:
-                        break;
-                }
+                    Room newRoom = null;
 
-                if (newRoom != null)
-                {
-                    OurPos = newRoom;
+                    switch (num)
+                    {
+                        case 1:
+                            newRoom = dbContext.getRoom((int)OurPos?.FirstRoomId);
+                            break;
+                        case 2:
+                            newRoom = dbContext.getRoom((int)OurPos?.SecondRoomId);
+                            break;
+                        case 3:
+                            newRoom = dbContext.getRoom((int)OurPos?.ThirdRoomId);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if (newRoom != null)
+                    {
+                        OurPos = newRoom;
+                    }
                 }
+            }
+            catch
+            {
+                MessageBox.Show("Its finish, you cant exit");
             }
         }
 
